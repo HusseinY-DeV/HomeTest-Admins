@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: Montserrat;
+}
+
+p {
+  font-family: Poppins;
+}
+
+a {
+  font-family: Montserrat;
+  text-decoration: none;
+  color: #3a3a3a;
+}
+
+input::placeholder {
+  font-size: 18px;
+}
