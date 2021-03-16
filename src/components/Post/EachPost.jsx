@@ -58,6 +58,10 @@ const EachPost = (props) => {
             const response = await getPost(postId);
             console.log(response);
             setBlog({...response.response});
+            if(blog) 
+            {
+                props.setPage("My Post");
+            }
         })()
     }, []);
     return ( 

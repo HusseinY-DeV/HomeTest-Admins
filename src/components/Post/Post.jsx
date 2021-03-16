@@ -205,7 +205,7 @@ const EachPost = styled.div`
 `;
 
 
-const Post = () => {
+const Post = (props) => {
    
 
     const [open,setOpen] = useState(false);
@@ -331,6 +331,7 @@ const Post = () => {
     } 
 
     useEffect(() => {
+        props.setPage("My Posts");
         (async () => {
             setLoading(true);
             const response = await getPosts();

@@ -10,6 +10,9 @@ import Admin from './components/Admin/Admin';
 import Post from './components/Post/Post';
 import EachPost from './components/Post/EachPost';
 import Footer from './components/Footer/Footer';
+import Test from './components/Test/Test';
+import Booking from './components/Booking/Booking';
+import Book from './components/Booking/Book';
 
 
 
@@ -22,7 +25,8 @@ function App() {
 
   const [render,setRender] = useState(false);
   const [auth,setAuth] = useState(false);
-  const [menu,setMenu] = useState(false); 
+  const [menu,setMenu] = useState(false);
+  const [page,setPage] = useState("HomeTest"); 
   const token = localStorage.getItem("token");
   
   useEffect(() => {  
@@ -38,23 +42,35 @@ function App() {
 
   return (
     <AppContainer>
-      {auth && <Nav menu={menu} setMenu={setMenu}  />}
+      {auth && <Nav page={page} menu={menu} setMenu={setMenu}  />}
       {auth && <Sidenav menu={menu} setMenu={setMenu} setRender={setRender} />}
         <Switch>
           <Route exact path="/">
-            <Login setRender={setRender} />
+            <Login  setRender={setRender} />
           </Route>
           <Route exact path="/profile">
-            <Profile setRender={setRender} />
+            <Profile setPage={setPage} setRender={setRender} />
           </Route>
           <Route exact path="/admins">
-            <Admin setRender={setRender} />
+            <Admin setPage={setPage} setRender={setRender} />
           </Route>
+          
           <Route exact path="/posts">
-            <Post setRender={setRender} />
+            <Post setPage={setPage} setRender={setRender} />
           </Route>
-          <Route exact path="/posts/:id" render={props => <EachPost {...props} />}>
+          
+          <Route exact path="/posts/:id" render={props => <EachPost setPage={setPage} {...props} />}>
           </Route>
+
+          <Route  exact path="/tests" render={props => <Test setPage={setPage}  {...props} />} >
+          </Route>
+
+          <Route  exact path="/bookings" render={props => <Booking setPage={setPage}  {...props} />} >
+          </Route>
+
+          <Route  exact path="/bookings/:id" render={props => <Book setPage={setPage}  {...props} />} >
+          </Route>
+
         </Switch>
         <Footer />
     </AppContainer>

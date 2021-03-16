@@ -28,7 +28,7 @@ const Menu = styled.aside`
 
     .menu__item {
         padding:10px;
-        width:100%;
+        width: 80%;
         display: flex;
         flex-direction:row;
         gap: 10px;

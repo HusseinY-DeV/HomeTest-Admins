@@ -11,10 +11,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Loader from "react-loader-spinner";
 import {getAllAdmins,addAdmin,deleteAdmin,getAdminId,updateAdmin} from './api';
-import { Button } from '@material-ui/core';
+import { Button, responsiveFontSizes } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
+import { useHistory } from 'react-router';
 
 
 const columns = [
@@ -136,7 +137,9 @@ const AddModal = styled.div`
 
 
 
-const Admin = () => {
+const Admin = (props) => {
+
+    const history = useHistory();
     const [rows,setRows] = useState([]);
     const [admins,setAdmins] = useState([]);
     const [page, setPage] = React.useState(0);
@@ -158,6 +161,7 @@ const Admin = () => {
     const [admin,setAdmin] = useState("");
 
     const classes = useStyles();
+    
     const handleOpen = () => {
       setOpen(true);
     };
@@ -246,10 +250,18 @@ const Admin = () => {
 
 
       useEffect(() => {
+        props.setPage("Admins");
           (async () =>{
               setLoading(true);
               const response = await getAllAdmins(page);
               setLoading(false);
+              if(response.response == undefined)
+              {
+                localStorage.removeItem("token");
+                localStorage.removeItem("id");
+                history.push("/");
+                return;
+              }
               const data = [...response.response.data];
               const newData = data.filter(d => {
                 return d.id != localStorage.getItem("id");
@@ -264,7 +276,7 @@ const Admin = () => {
  color="primary" type="button" onClick={handleOpen}>
    Add Admin
       </Button>
-      {rows.length == 0 && <p>No admins ! Make sure to add some !</p>}
+      {rows.length == 0 && <p>No admins other than you ! Make sure to add some !</p>}
       {del && <h3><em>{del}</em></h3>}
       <AddModal open={open}>
         <h2>Add Admin</h2>

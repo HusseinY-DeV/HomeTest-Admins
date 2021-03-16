@@ -28,7 +28,7 @@ const Navbar = styled.nav`
     }
 `;
 
-const Nav = ({menu,setMenu}) => {
+const Nav = ({menu,setMenu,page}) => {
 
     const handleMenuClick = () => {
         setMenu(!menu);
@@ -39,7 +39,7 @@ const Nav = ({menu,setMenu}) => {
             <MenuIcon className="navbar__menu" 
             onClick={handleMenuClick}
             />
-            <p className="navbar__logo">HomeTest</p>
+            <p className="navbar__logo">{page}</p>
         </Navbar>
      );
 }

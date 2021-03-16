@@ -26,7 +26,7 @@ const ProfileContainer = styled.div`
 `;
 
 
-const Profile = () => {
+const Profile = (props) => {
     
     const [admin,setAdmin] = useState({});
     const [loading,setLoading] = useState(false);
@@ -51,6 +51,7 @@ const Profile = () => {
         },2500)
     }
     useEffect(() => {
+        props.setPage("HomeTest");
         (async () => {
             setLoading(true);
             const response = await getAdminById(id);
