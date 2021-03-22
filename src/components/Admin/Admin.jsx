@@ -53,6 +53,14 @@ const AdminContainer = styled.div`
     justify-content:center;
     align-items:center;
     gap:10px;
+
+    p.info {
+      color: blue;
+      font-weight: bold;
+      font-size: 15px;
+      margin: 10px;
+      padding: 10px;
+    }
 `;
 
 const EditModal = styled.div`
@@ -91,7 +99,7 @@ pointer-events : ${({show}) => show ? "fill" : "none"};
 
 
 const AddModal = styled.div`
-    width: 60%;
+    width: 40%;
     position:fixed;
     height:50vh;
     padding: 10px;
@@ -116,9 +124,14 @@ const AddModal = styled.div`
       align-items: center;
     }
 
+    p {
+      text-align : center;
+    }
+
     i {
       color : red;
       margin: 10px;
+      text-align: center;
     }
 
     strong {
@@ -126,7 +139,7 @@ const AddModal = styled.div`
       margin: 10px;
     }
 
-    h3 {
+    h4 {
       color : green;
       text-align: center;
     }
@@ -276,8 +289,8 @@ const Admin = (props) => {
  color="primary" type="button" onClick={handleOpen}>
    Add Admin
       </Button>
-      {rows.length == 0 && <p>No admins other than you ! Make sure to add some !</p>}
-      {del && <h3><em>{del}</em></h3>}
+      {rows.length == 0 && <p className="info">No other admins !</p>}
+      {del && <h4><em>{del}</em></h4>}
       <AddModal open={open}>
         <h2>Add Admin</h2>
         {success && <h4>{success}</h4>}

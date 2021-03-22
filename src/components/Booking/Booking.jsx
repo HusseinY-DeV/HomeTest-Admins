@@ -59,6 +59,13 @@ const BookingPage = styled.div`
         margin: 10px;
         color: #3a3a3a;
     }
+    p.info {
+      color: crimson;
+      font-weight: bold;
+      font-size: 15px;
+      margin: 10px;
+      padding: 10px;
+    }
 
 `;
 
@@ -97,7 +104,6 @@ const Booking = (props) => {
 
     return ( 
         <BookingPage>
-            {rows.length == 0 && <p> <em> No bookings are currently available </em></p>}
              {loading ? (<Loader
         type="ThreeDots"
         color="#9bff6d"
@@ -123,13 +129,23 @@ const Booking = (props) => {
                     </TableHead>
                     <TableBody>
                       {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => {
+
+                        if(row.test[0] && row.test[0].pivot.checked_out == "false" || row.location_id == 0 || row.test.length == 0){
+                          return (
+                            <>
+                            </>
+                          )
+                        }
+                        else {
+
                         return (
+
                           <TableRow
                           onClick={(e) => {
                                 e.preventDefault();
                                 handleRowClick(row.id);
                           }}
-                          hover role="checkbox" tabIndex={-1} key={row.id}>
+                          hover role="checkbox" tabIndex={-1} key={i}>
                             <TableCell align="center">
                               {i+1}
                             </TableCell>
@@ -140,12 +156,11 @@ const Booking = (props) => {
                                 {row.last_name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.test[0].pivot.date}
+                                {row.test[0] ? row.test[0].pivot.date : null}
                             </TableCell>
-
                           </TableRow>
                         );
-                      })}
+                      }})}
                     </TableBody>
                   </Table>
                 </TableContainer>

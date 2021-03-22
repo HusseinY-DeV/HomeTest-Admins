@@ -37,7 +37,7 @@ min-height: 90vh;
 
 .text__container small {
     font-weight: bold;
-    color: #bfbfbf;
+    color: #3a3a;
     font-family: Montserrat;
     font-size: 16px;
 }

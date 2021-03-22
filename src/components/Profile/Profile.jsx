@@ -5,6 +5,7 @@ import {getAdminById,editAdminPassword} from "./api";
 import Loader from "react-loader-spinner";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { getPosts } from '../Post/api';
 
 
 const ProfileContainer = styled.div`
@@ -32,6 +33,7 @@ const Profile = (props) => {
     const [loading,setLoading] = useState(false);
     const [password,setPassword] = useState("");
     const [err,setErr] = useState(""); 
+    const [posts,setPosts] = useState(null);
     const [success,setSuccess] = useState("");  
     const id = localStorage.getItem("id");
 
@@ -55,6 +57,8 @@ const Profile = (props) => {
         (async () => {
             setLoading(true);
             const response = await getAdminById(id);
+            const postsResponse = await getPosts();
+            setPosts(postsResponse.response.data.length);
             setLoading(false);
             setAdmin({...response.response});
         })();
@@ -72,6 +76,7 @@ const Profile = (props) => {
             />) : (
             <>
             <img src={profile} width="200px" />
+            <p>Posts posted : {posts} </p>
             <p><i>{err}</i></p>
             <p><em>{success}</em></p>
             <p><strong>Username</strong> : {admin.username}</p>

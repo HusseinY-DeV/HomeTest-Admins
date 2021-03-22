@@ -1,6 +1,6 @@
 import React , {useEffect,useState} from "react";
 import styled from "styled-components";
-import { getBooking } from "./api";
+import { getBooking,deliver } from "./api";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -68,6 +68,10 @@ const BookPage = styled.div`
       margin-top: 10px;
   }
 
+  h4 {
+    margin: 10px;
+  }
+
 `;
 
 
@@ -106,20 +110,42 @@ const Book = (props) => {
     const [lname,setLname] = useState("");
     const [date,setDate] = useState("");
     const [dDate,setDdate] = useState("");
+    const [city,setCity] = useState("");
+    const [building,setBuilding] = useState("");
+    const [street,setStreet] = useState("");
+
     const [loading,setLoading] = useState(true);
 
     const [rows,setRows] = useState({});
     const [render,setRender] = useState(false);
     const [show,setShow] = useState(false);
+    const [t,setT] = useState(null);
+
+
+    function getSum(total, num) {
+      return total + num;
+    }
 
     const classes = useStyles();
+    let price = [];
+    let total = null;
 
     useEffect(() => {
         props.setPage("Booking");
         (async () => {
             
             const response = await getBooking(id);
+            response.response[0].test.forEach(t => {
+              price.push(t.price);
+            })
+
+            total = price.reduce(getSum,0);
+            setT(total);
+            
             setRows({...response.response[0]});
+            setStreet(response.response[0].location.street);
+            setCity(response.response[0].location.city);
+            setBuilding(response.response[0].location.building);
             setFname(response.response[0].first_name);
             setLname(response.response[0].last_name);
             setDate(response.response[0].test[0].pivot.booked_date);
@@ -137,6 +163,9 @@ const Book = (props) => {
 
             <p><strong>Patient : </strong>{fname} {lname} <span className="date">Date booked : {date}</span>
             <span className="date">Delivery date : {dDate}</span>
+            <span className="location">
+              Location : {city} - {street} - {building}
+            </span>
             </p>
             {loading ? (<Loader
         type="ThreeDots"
@@ -165,7 +194,7 @@ const Book = (props) => {
                       {rows.test.map((row,i) => {
                         return (
                           <TableRow
-                          hover role="checkbox" tabIndex={-1} key={row.id}>
+                          hover role="checkbox" tabIndex={-1} key={i}>
                                    <TableCell align="center">
                               {i+1}
                             </TableCell>
@@ -184,8 +213,11 @@ const Book = (props) => {
               </Paper>
             ) }
 
+            <h4>Total : {t} L.L </h4>
             <Button className="btn" variant="contained" color="primary" startIcon={<LocalShippingIcon/>}
-            onClick = {e => {
+            onClick = {async e => {
+              const response = await deliver(id);
+              console.log(response);
                 setShow(true);
                 setTimeout(() => {
                     setShow(false);

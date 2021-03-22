@@ -28,3 +28,14 @@ export const getBooking = async (id) => {
     const data = await response.json();
     return data;
 }
+
+
+export const deliver  = async (id) => {
+    const response = await fetch(`${back}/admindeliver/${id}`,{
+        method  : "DELETE",
+    })
+
+    const data = await response.json();
+
+    return data;
+}

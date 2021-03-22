@@ -7,7 +7,7 @@ const Navbar = styled.nav`
     width: 100%;
     position:fixed;
     top:0px;
-    background-color: #9bff6d;
+    background-color: #3f51b5;
     display: flex;
     justify-content: space-between;
     align-items:center;
@@ -15,7 +15,7 @@ const Navbar = styled.nav`
     z-index: 20;
 
     .navbar__logo {
-        color : #3a3b3a;
+        color : whitesmoke;
         font-size:20px;
         cursor: none;
     }
@@ -24,7 +24,7 @@ const Navbar = styled.nav`
         cursor: pointer;
         transform : ${({menu}) => menu ? "rotate(-180deg) scale(1.5)" : "rotate(180deg) scale(1)"};
         transition: all 0.3s ease;
-        color :  ${({menu}) => menu ? "white" : "#3a3a3a"};
+        color : white;
     }
 `;
 

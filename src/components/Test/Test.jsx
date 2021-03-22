@@ -124,7 +124,7 @@ flex-direction: column;
 justify-content:center;
 gap: 10px;
 align-items:center;
-background-color: #a9ff82;
+background-color: #eeee;
 color : #3a3a3a;
 padding: 20px;
 border-radius: 7px;

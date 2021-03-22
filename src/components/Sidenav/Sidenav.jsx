@@ -19,7 +19,7 @@ const Menu = styled.aside`
     gap: 40px;
     transition: all 0.3s ease;
     transform: ${({menu}) => menu ? "translateX(0)" : "translateX(-100%)"}; 
-    background-color: #9bff6d;
+    background-color: #3f51b5;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@ const Menu = styled.aside`
         width: 90%;
     }
     .menu__item svg {
-        width : 10%;
+        width : 15%;
         color : #3f51b5;
     }
 
@@ -115,7 +115,7 @@ const Sidenav = ({setRender,setMenu,menu}) => {
                 <Bookmark />
                 <Link to="/bookings" onClick={handleLinkClick}>Bookings</Link>
             </div>
-            <Button variant="contained" color="primary" disableElevation onClick={handleLogout}>
+            <Button variant="contained" disableElevation onClick={handleLogout}>
                 Logout
             </Button>
         </Menu>
