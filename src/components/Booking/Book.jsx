@@ -1,6 +1,6 @@
 import React , {useEffect,useState} from "react";
 import styled from "styled-components";
-import { getBooking,deliver } from "./api";
+import { getBooking,deliver,decline, onSuccess } from "./api";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -72,6 +72,14 @@ const BookPage = styled.div`
     margin: 10px;
   }
 
+  .btn__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    gap: 30px;
+  }
+
 `;
 
 
@@ -113,6 +121,7 @@ const Book = (props) => {
     const [city,setCity] = useState("");
     const [building,setBuilding] = useState("");
     const [street,setStreet] = useState("");
+    const [number,setNumber] = useState("");
 
     const [loading,setLoading] = useState(true);
 
@@ -145,6 +154,7 @@ const Book = (props) => {
             setRows({...response.response[0]});
             setStreet(response.response[0].location.street);
             setCity(response.response[0].location.city);
+            setNumber(response.response[0].phone_number);
             setBuilding(response.response[0].location.building);
             setFname(response.response[0].first_name);
             setLname(response.response[0].last_name);
@@ -161,7 +171,7 @@ const Book = (props) => {
                <p> Delivering... </p>     
             </Notification>
 
-            <p><strong>Patient : </strong>{fname} {lname} <span className="date">Date booked : {date}</span>
+            <p><strong>Patient : </strong>{fname} {lname} - {number} <span className="date">Date booked : {date}</span>
             <span className="date">Delivery date : {dDate}</span>
             <span className="location">
               Location : {city} - {street} - {building}
@@ -214,7 +224,20 @@ const Book = (props) => {
             ) }
 
             <h4>Total : {t} L.L </h4>
-            <Button className="btn" variant="contained" color="primary" startIcon={<LocalShippingIcon/>}
+            <div className="btn__container">
+            {rows.test && rows.test[0].pivot.delivery_status == "pending" ?             <Button className="btn" variant="contained" color="primary" startIcon={<LocalShippingIcon/>}
+            onClick = {async e => {
+              const response = await onSuccess(id);
+              console.log(response);
+                setTimeout(() => {
+                    history.push("/bookings");
+                },1500);
+            
+            }}
+            >
+              Success
+            </Button>
+  :             <Button className="btn" variant="contained" color="primary" startIcon={<LocalShippingIcon/>}
             onClick = {async e => {
               const response = await deliver(id);
               console.log(response);
@@ -225,11 +248,25 @@ const Book = (props) => {
                 setTimeout(() => {
                     history.push("/bookings");
                 },3200);
-            
             }}
+            disabled={rows.test && rows.test[0].pivot.delivery_status == "delivered"}
             >
                 Deliver
             </Button>
+ }
+            <Button className="btn" variant="contained" color="secondary"
+            onClick = {async e => {
+              const response = await decline(id);
+                setTimeout(() => {
+                    history.push("/bookings");
+                },1000);
+            
+            }}
+            disabled={rows.test && rows.test[0].pivot.delivery_status == "delivered" || "pending"}
+            >
+                Decline
+            </Button>
+            </div>
         </BookPage>
       );
 }

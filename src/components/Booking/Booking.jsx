@@ -30,7 +30,7 @@ const columns = [
     },
     {
         id: 'date',
-        label: 'Delivery date',
+        label: 'Delivery Status',
         minWidth: 170,
         align: 'center',
       }  
@@ -81,8 +81,14 @@ const Booking = (props) => {
     const classes = useStyles();
 
 
-    const handleRowClick = (id) => {
-        history.push(`/bookings/${id}`)
+    const handleRowClick = (id,status) => {
+
+      // if(status == "pending")
+      // {
+      //   return;
+      // }
+      history.push(`/bookings/${id}`);
+
     }
 
     const handleChangePage = (event, newPage) => {
@@ -129,7 +135,6 @@ const Booking = (props) => {
                     </TableHead>
                     <TableBody>
                       {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => {
-
                         if(row.test[0] && row.test[0].pivot.checked_out == "false" || row.location_id == 0 || row.test.length == 0){
                           return (
                             <>
@@ -143,7 +148,7 @@ const Booking = (props) => {
                           <TableRow
                           onClick={(e) => {
                                 e.preventDefault();
-                                handleRowClick(row.id);
+                                handleRowClick(row.id,row.test[0].pivot.delivery_status);
                           }}
                           hover role="checkbox" tabIndex={-1} key={i}>
                             <TableCell align="center">
@@ -156,7 +161,7 @@ const Booking = (props) => {
                                 {row.last_name}
                             </TableCell>
                             <TableCell align="center">
-                                {row.test[0] ? row.test[0].pivot.date : null}
+                                {row.test[0] ? row.test[0].pivot.delivery_status : null}
                             </TableCell>
                           </TableRow>
                         );

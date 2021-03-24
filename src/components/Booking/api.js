@@ -32,10 +32,29 @@ export const getBooking = async (id) => {
 
 export const deliver  = async (id) => {
     const response = await fetch(`${back}/admindeliver/${id}`,{
-        method  : "DELETE",
+        method  : "PUT",
     })
 
     const data = await response.json();
 
     return data;
 }
+
+export const onSuccess  = async (id) => {
+    const response = await fetch(`${back}/adminsuccess/${id}`,{
+        method  : "PUT",
+    })
+
+    const data = await response.json();
+    return data;
+}
+
+export const decline  = async (id) => {
+    const response = await fetch(`${back}/decline/${id}`,{
+        method  : "DELETE",
+    })
+
+    const data = await response.json();
+    return data;
+}
+
