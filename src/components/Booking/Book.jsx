@@ -254,7 +254,7 @@ const Book = (props) => {
                 Deliver
             </Button>
  }
-            <Button className="btn" variant="contained" color="secondary"
+            {rows.test && rows.test[0].pivot.delivery_status == "delivered" ?    <Button className="btn" variant="contained" color="secondary"
             onClick = {async e => {
               const response = await decline(id);
                 setTimeout(() => {
@@ -262,10 +262,20 @@ const Book = (props) => {
                 },1000);
             
             }}
-            disabled={rows.test && rows.test[0].pivot.delivery_status == "delivered" || "pending"}
+            disabled
             >
                 Decline
-            </Button>
+            </Button> :    <Button className="btn" variant="contained" color="secondary"
+            onClick = {async e => {
+              const response = await decline(id);
+                setTimeout(() => {
+                    history.push("/bookings");
+                },1000);
+            
+            }}
+            >
+                Decline
+            </Button>}
             </div>
         </BookPage>
       );

@@ -83,10 +83,6 @@ const Booking = (props) => {
 
     const handleRowClick = (id,status) => {
 
-      // if(status == "pending")
-      // {
-      //   return;
-      // }
       history.push(`/bookings/${id}`);
 
     }
@@ -100,6 +96,7 @@ const Booking = (props) => {
         props.setPage("Bookings");
         (async () => {
             const response = await getBookings();
+            console.log(response);
             let data = [...response.response.data];
             data = data.reverse();
             setLoading(false);

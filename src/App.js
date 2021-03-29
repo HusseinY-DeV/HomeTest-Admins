@@ -46,7 +46,7 @@ function App() {
       {auth && <Sidenav menu={menu} setMenu={setMenu} setRender={setRender} />}
         <Switch>
           <Route exact path="/">
-            <Login  setRender={setRender} />
+            <Login setAuth={setAuth} setRender={setRender} />
           </Route>
           <Route exact path="/profile">
             <Profile setPage={setPage} setRender={setRender} />

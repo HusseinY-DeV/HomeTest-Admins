@@ -44,12 +44,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({setRender}) => {
+const Login = ({setRender,setAuth}) => {
 
     const history = useHistory();
     const classes = useStyles();
-    const [name,setName] = useState("admin");
-    const [password,setPassword] = useState("admin");
+    const [name,setName] = useState("");
+    const [password,setPassword] = useState("");
     const [error,setError] = useState("");
 
     const handleSignin = async (e) => {
@@ -75,6 +75,7 @@ const Login = ({setRender}) => {
     }
 
     useEffect(() => {
+        setAuth(false);
     }, []);
 
     return (
