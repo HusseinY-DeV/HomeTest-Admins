@@ -13,7 +13,7 @@ import { Button } from '@material-ui/core';
 const Menu = styled.aside`
     position:fixed;
     z-index: 10;
-    top:63px;
+    top:61px;
     width: 20%;
     height: 90vh;
     gap: 40px;
